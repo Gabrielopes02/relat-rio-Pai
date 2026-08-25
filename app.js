@@ -1,25 +1,25 @@
 const addTable = document.querySelector("#adicionar");
-const saveInPdf =document.querySelector('#saveInPdf')
+const saveInPdf = document.querySelector("#saveInPdf");
 addTable.addEventListener("click", () => {
   const tableQnt = document.querySelector("#tableQnt");
   const tableDesc = document.querySelector("#tableDesc");
   const tableValUni = document.querySelector("#tableValUni");
   const tableTot = document.querySelector("#tableTot");
-  const ul = document.querySelector("#ulList");
 
-  const newLi = document.createElement("li");
-  
-  newLi.innerHTML = `
-          <div class="flex flex-wrap" >
-          <div class="w-1/10 flex justify-center items-center">${tableQnt.value}</div>
-          <div class="w-7/10 text-justify p-5 flex justify-center items center "><p>${tableDesc.value}</p></div>
-          <div class="w-1/10 flex justify-center items-center">${tableValUni.value}</div>
-          <div class="w-1/10 flex justify-center items-center">${tableTot.value}</div>
-          </div>`;
+  const divList = document.querySelector("#divList");
 
-  
-  newLi.classList.add('border')
-  ul.append(newLi);
+  const newDiv = document.createElement("div");
+
+  newDiv.innerHTML = `<div class="flex p-1 w-full gap-2">
+          <div class=" w-full max-w-1/10 flex break-all">${tableQnt.value}</div>
+          <div class="w-full flex justify-center wrap text-justify">${tableDesc.value}</div>
+          <div class="w-2/10 text-center">${tableValUni.value}</div>
+          <div class="w-2/10 flex justify-center">${tableTot.value}</div>
+        </div>
+        <div id="divList">`;
+
+  newDiv.classList.add("border");
+  divList.append(newDiv);
 
   tableQnt.value = "";
   tableDesc.value = "";
@@ -28,7 +28,6 @@ addTable.addEventListener("click", () => {
 
   console.log(tableQnt, tableDesc, tableValUni, tableTot);
 });
-saveInPdf.addEventListener('click', () => {
-  
-  window.print()
-})
+saveInPdf.addEventListener("click", () => {
+  window.print();
+});
