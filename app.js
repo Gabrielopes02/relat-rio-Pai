@@ -31,3 +31,28 @@ addTable.addEventListener("click", () => {
 saveInPdf.addEventListener("click", () => {
   window.print();
 });
+
+const inputPressionB= document.querySelector('#baixaBar')
+const inputPressionBPa = document.querySelector('#baixaMPa')
+inputPressionB.addEventListener('change',()=>{
+  
+  let unidadesMedida =[
+    ["mBar",1,0.1],
+    ['Bar',1000,100],
+    ['mPa',0.01,0.00000001],
+    ['MPa',10000,0.001],
+    ['KPa',10,1]]
+  
+  
+  
+  unidadesMedida.forEach((u)=>{
+ if(inputPressionB.value.includes(u[0])){
+  let value =  Number(inputPressionB.value.split(u[0])[0])
+let convertTomBar = value*u[1]
+let convertToKPa = value*u[2]
+inputPressionB.value=convertTomBar
+inputPressionBPa.value= convertToKPa
+ }
+  
+  })
+})
