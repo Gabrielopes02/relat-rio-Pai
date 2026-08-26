@@ -32,27 +32,39 @@ saveInPdf.addEventListener("click", () => {
   window.print();
 });
 
-const inputPressionB= document.querySelector('#baixaBar')
-const inputPressionBPa = document.querySelector('#baixaMPa')
-inputPressionB.addEventListener('change',()=>{
-  
-  let unidadesMedida =[
-    ["mBar",1,0.1],
-    ['Bar',1000,100],
-    ['mPa',0.01,0.00000001],
-    ['MPa',10000,0.001],
-    ['KPa',10,1]]
-  
-  
-  
-  unidadesMedida.forEach((u)=>{
- if(inputPressionB.value.includes(u[0])){
-  let value =  Number(inputPressionB.value.split(u[0])[0])
-let convertTomBar = value*u[1]
-let convertToKPa = value*u[2]
-inputPressionB.value=convertTomBar
-inputPressionBPa.value= convertToKPa
- }
-  
-  })
-})
+const inputPressionB = document.querySelector("#baixaBar");
+const inputPressionBPa = document.querySelector("#baixaMPa");
+const inputPressionA = document.querySelector("#altaBar");
+const inputPressionAKPa = document.querySelector("#altaKPa");
+
+let unidadesMedida = [
+  ["mBar", 1, 0.1],
+  ["Bar", 1000, 100],
+  ["mPa", 0.01, 0.00000001],
+  ["MPa", 10000, 1000],
+  ["KPa", 10, 1],
+];
+
+inputPressionA.addEventListener("change", () => {
+  unidadesMedida.forEach((u) => {
+    if (inputPressionA.value.includes(u[0])) {
+      let value = Number(inputPressionA.value.split(u[0])[0]);
+      let convertTomBar = value * u[1];
+      let convertToKPa = value * u[2];
+      inputPressionA.value = `${convertTomBar} mBar`;
+      inputPressionAKPa.value = `${convertToKPa} Kpa`;
+    }
+  });
+});
+
+inputPressionB.addEventListener("change", () => {
+  unidadesMedida.forEach((u) => {
+    if (inputPressionB.value.includes(u[0])) {
+      let value = Number(inputPressionB.value.split(u[0])[0]);
+      let convertTomBar = value * u[1];
+      let convertToKPa = value * u[2];
+      inputPressionB.value = `${convertTomBar} mBar`;
+      inputPressionBPa.value = `${convertToKPa} Kpa`;
+    }
+  });
+});
