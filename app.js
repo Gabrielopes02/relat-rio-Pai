@@ -1,5 +1,6 @@
 const addTable = document.querySelector("#adicionar");
 const saveInPdf = document.querySelector("#saveInPdf");
+
 addTable.addEventListener("click", () => {
   const tableQnt = document.querySelector("#tableQnt");
   const tableDesc = document.querySelector("#tableDesc");
@@ -46,25 +47,27 @@ let unidadesMedida = [
 ];
 
 inputPressionA.addEventListener("change", () => {
-  unidadesMedida.forEach((u) => {
-    if (inputPressionA.value.includes(u[0])) {
-      let value = Number(inputPressionA.value.split(u[0])[0]);
-      let convertTomBar = value * u[1];
-      let convertToKPa = value * u[2];
+  
+  const unidadeEncontrada = unidadesMedida.find(u => inputPressionA.value.includes(u[0]))
+
+  let value = Number(inputPressionA.value.split(unidadeEncontrada[0])[0])
+ 
+      let convertTomBar = value * unidadeEncontrada[1];
+      let convertToKPa = value * unidadeEncontrada[2];
       inputPressionA.value = `${convertTomBar} mBar`;
       inputPressionAKPa.value = `${convertToKPa} Kpa`;
-    }
-  });
+
 });
 
 inputPressionB.addEventListener("change", () => {
-  unidadesMedida.forEach((u) => {
-    if (inputPressionB.value.includes(u[0])) {
-      let value = Number(inputPressionB.value.split(u[0])[0]);
-      let convertTomBar = value * u[1];
-      let convertToKPa = value * u[2];
+  
+  const unidadeEncontrada = unidadesMedida.find(u => inputPressionB.value.includes(u[0]))
+
+  let value = Number(inputPressionB.value.split(unidadeEncontrada[0])[0])
+ 
+      let convertTomBar = value * unidadeEncontrada[1];
+      let convertToKPa = value * unidadeEncontrada[2];
       inputPressionB.value = `${convertTomBar} mBar`;
       inputPressionBPa.value = `${convertToKPa} Kpa`;
-    }
-  });
+
 });
