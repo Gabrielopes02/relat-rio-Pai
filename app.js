@@ -1,3 +1,9 @@
+/*
+to do list
+colocar tabela pra fazer as contas
+
+*/
+
 const addTable = document.querySelector("#adicionar");
 const saveInPdf = document.querySelector("#saveInPdf");
 
@@ -10,24 +16,38 @@ addTable.addEventListener("click", () => {
   const divList = document.querySelector("#divList");
 
   const newDiv = document.createElement("div");
+  divTotalExist = document.querySelector("#divTotal");
 
   newDiv.innerHTML = `<div class="flex p-1 w-full gap-2">
           <div class=" w-full max-w-1/10 flex break-all">${tableQnt.value}</div>
           <div class="w-full flex justify-center wrap text-justify break-all">${tableDesc.value}</div>
-          <div class="w-2/10 text-center">${tableValUni.value}</div>
-          <div class="w-2/10 flex justify-center">${tableTot.value}</div>
-        </div>
-        <div id="divList">`;
+          <div class="w-2/10 text-center">R$ ${tableValUni.value == "" ? "00,00" : tableValUni.value}</div>
+          <div class="w-2/10 flex justify-center somaTot">R$ ${tableQnt.value * tableValUni.value == 0 ? "00,00" : tableQnt.value * tableValUni.value}</div>
+        </div>`;
 
   newDiv.classList.add("border");
   divList.append(newDiv);
 
-  tableQnt.value = "";
-  tableDesc.value = "";
-  tableValUni.value = "";
-  tableTot.value = "";
+  if (divTotalExist) {
+    divList.appendChild(divTotalExist);
+  } else {
+    let divTotal = document.createElement("div");
+    divTotal.innerHTML = `<div class="flex p-1 w-full gap-2">
+          <div class=" w-full max-w-1/10 flex break-all"></div>
+          <div class="w-full flex justify-center wrap text-justify break-all"></div>
+          <div class="w-2/10 text-center">Total</div>
+          <div class="w-2/10 flex justify-center"></div>
+        </div>`;
+    divTotal.setAttribute("id", "divTotal");
+    divList.append(divTotal);
 
-  console.log(tableQnt, tableDesc, tableValUni, tableTot);
+    tableQnt.value = "";
+    tableDesc.value = "";
+    tableValUni.value = "";
+    tableTot.value = "";
+    divsTotalSoma = document.getElementsByClassName("somaTot");
+    console.log(divsTotalSoma);
+  }
 });
 saveInPdf.addEventListener("click", () => {
   window.print();
@@ -39,35 +59,73 @@ const inputPressionA = document.querySelector("#altaBar");
 const inputPressionAKPa = document.querySelector("#altaKPa");
 
 let unidadesMedida = [
-  ["mBar", 1, 0.1],
-  ["Bar", 1000, 100],
-  ["mPa", 0.01, 0.00000001],
-  ["MPa", 10000, 1000],
-  ["KPa", 10, 1],
+  [1, 100],
+  [0.01, 1],
+  [1, 10],
+  [0.1, 1],
 ];
 
-inputPressionA.addEventListener("change", () => {
-  
-  const unidadeEncontrada = unidadesMedida.find(u => inputPressionA.value.includes(u[0]))
+inputPressionB.addEventListener("change", () => {
+  let value = Number(inputPressionB.value);
 
-  let value = Number(inputPressionA.value.split(unidadeEncontrada[0])[0])
- 
-      let convertTomBar = value * unidadeEncontrada[1];
-      let convertToKPa = value * unidadeEncontrada[2];
-      inputPressionA.value = `${convertTomBar} mBar`;
-      inputPressionAKPa.value = `${convertToKPa} Kpa`;
-
+  let convertTomBar = value * unidadesMedida[0][0];
+  let convertToKPa = value * unidadesMedida[0][1];
+  inputPressionB.value = `${convertTomBar} Bar`;
+  inputPressionBPa.value = `${convertToKPa} Kpa`;
 });
 
-inputPressionB.addEventListener("change", () => {
-  
-  const unidadeEncontrada = unidadesMedida.find(u => inputPressionB.value.includes(u[0]))
+inputPressionBPa.addEventListener("change", () => {
+  let value = Number(inputPressionBPa.value);
 
-  let value = Number(inputPressionB.value.split(unidadeEncontrada[0])[0])
- 
-      let convertTomBar = value * unidadeEncontrada[1];
-      let convertToKPa = value * unidadeEncontrada[2];
-      inputPressionB.value = `${convertTomBar} mBar`;
-      inputPressionBPa.value = `${convertToKPa} Kpa`;
+  let convertTomBar = value * unidadesMedida[1][0];
+  let convertToKPa = value * unidadesMedida[1][1];
+  inputPressionB.value = `${convertTomBar} Bar`;
+  inputPressionBPa.value = `${convertToKPa} Kpa`;
+});
 
+inputPressionA.addEventListener("change", () => {
+  let value = Number(inputPressionA.value);
+
+  let convertTomBar = value * unidadesMedida[0][0];
+  let convertToKPa = value * unidadesMedida[0][1];
+  inputPressionA.value = `${convertTomBar} Bar`;
+  inputPressionAKPa.value = `${convertToKPa} Kpa`;
+});
+
+inputPressionAKPa.addEventListener("change", () => {
+  let value = Number(inputPressionAKPa.value);
+
+  let convertTomBar = value * unidadesMedida[1][0];
+  let convertToKPa = value * unidadesMedida[1][1];
+  inputPressionA.value = `${convertTomBar} Bar`;
+  inputPressionAKPa.value = `${convertToKPa} Kpa`;
+});
+const sensorMapBar = document.querySelector("#sensorMapBar");
+const sensorMapPa = document.querySelector("#sensorMapPa");
+const inputs = [
+  inputPressionA,
+  inputPressionAKPa,
+  inputPressionB,
+  inputPressionBPa,
+  sensorMapBar,
+  sensorMapPa,
+];
+inputs.forEach((input) => {
+  input.addEventListener("click", () => (input.value = ""));
+});
+
+sensorMapBar.addEventListener("change", () => {
+  let value = sensorMapBar.value;
+  let valuemBar = value * unidadesMedida[2][0];
+  let valueKPa = value * unidadesMedida[2][1];
+  sensorMapBar.value = `${valuemBar} mBar`;
+  sensorMapPa.value = `${valueKPa} KPa`;
+});
+
+sensorMapPa.addEventListener("change", () => {
+  let value = sensorMapPa.value;
+  let valuemBar = value * unidadesMedida[3][0];
+  let valueKPa = value * unidadesMedida[3][1];
+  sensorMapBar.value = `${valuemBar} mBar`;
+  sensorMapPa.value = `${valueKPa} KPa`;
 });
