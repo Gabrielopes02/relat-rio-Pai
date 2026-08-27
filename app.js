@@ -6,6 +6,7 @@ colocar tabela pra fazer as contas
 
 const addTable = document.querySelector("#adicionar");
 const saveInPdf = document.querySelector("#saveInPdf");
+let arrayTotal = [];
 
 addTable.addEventListener("click", () => {
   const tableQnt = document.querySelector("#tableQnt");
@@ -16,13 +17,14 @@ addTable.addEventListener("click", () => {
   const divList = document.querySelector("#divList");
 
   const newDiv = document.createElement("div");
-  divTotalExist = document.querySelector("#divTotal");
+  let total = 0;
 
+  divTotalExist = document.querySelector("#divTotal");
   newDiv.innerHTML = `<div class="flex p-1 w-full gap-2">
           <div class=" w-full max-w-1/10 flex break-all">${tableQnt.value}</div>
           <div class="w-full flex justify-center wrap text-justify break-all">${tableDesc.value}</div>
           <div class="w-2/10 text-center">R$ ${tableValUni.value == "" ? "00,00" : tableValUni.value}</div>
-          <div class="w-2/10 flex justify-center somaTot">R$ ${tableQnt.value * tableValUni.value == 0 ? "00,00" : tableQnt.value * tableValUni.value}</div>
+          <div class="w-2/10 flex justify-center">R$ ${tableQnt.value * tableValUni.value == 0 ? "00,00" : tableQnt.value * tableValUni.value}</div>
         </div>`;
 
   newDiv.classList.add("border");
@@ -32,22 +34,27 @@ addTable.addEventListener("click", () => {
     divList.appendChild(divTotalExist);
   } else {
     let divTotal = document.createElement("div");
-    divTotal.innerHTML = `<div class="flex p-1 w-full gap-2">
+    divTotal.innerHTML = `<div class="flex w-full mt-1">
           <div class=" w-full max-w-1/10 flex break-all"></div>
           <div class="w-full flex justify-center wrap text-justify break-all"></div>
-          <div class="w-2/10 text-center">Total</div>
-          <div class="w-2/10 flex justify-center"></div>
+          <div class="w-2/10 text-center border border-r-0">Total</div>
+          <div class="w-2/10 flex justify-center border border-l-0">R$ ${total}</div>
         </div>`;
+
     divTotal.setAttribute("id", "divTotal");
     divList.append(divTotal);
-
-    tableQnt.value = "";
-    tableDesc.value = "";
-    tableValUni.value = "";
-    tableTot.value = "";
-    divsTotalSoma = document.getElementsByClassName("somaTot");
-    console.log(divsTotalSoma);
   }
+  arrayTotal.push(tableQnt.value * tableValUni.value);
+
+  console.log(divTotal.children[0].children[3]);
+  tableQnt.value = "";
+  tableDesc.value = "";
+  tableValUni.value = "";
+  tableTot.value = "";
+  arrayTotal.forEach((u) => {
+    total += u;
+  });
+  divTotal.children[0].children[3].innerHTML = `R$${total}`;
 });
 saveInPdf.addEventListener("click", () => {
   window.print();
