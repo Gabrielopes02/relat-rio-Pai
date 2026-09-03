@@ -21,6 +21,7 @@ const sensorMapBar = document.querySelector("#sensorMapBar");
 const sensorMapPa = document.querySelector("#sensorMapPa");
 const sensorMafBar = document.querySelector("#sensorMafBar");
 const sensorMafPa = document.querySelector("#sensorMafPa");
+
 const inputs = [
   inputPressionA,
   inputPressionAKPa,
@@ -52,13 +53,13 @@ addTable.addEventListener("click", () => {
   const table = document.querySelector("#table");
   divTotalExist = document.querySelector("#divTotal");
   newDiv.innerHTML = `<div class="flex p-1 w-full gap-2">
-          <div class=" w-full max-w-1/10 flex break-all nowrap">${tableQnt.value}</div>
+          <div class=" w-full max-w-1/10 flex break-all nowrap justify-center">${tableQnt.value}</div>
           <div class="w-full flex justify-center wrap text-justify break-all">${tableDesc.value}</div>
           <div class="w-2/10 text-center">R$ ${tableValUni.value == "" ? "00,00" : tableValUni.value}</div>
           <div class="w-2/10 flex justify-center">R$ ${tableQnt.value * tableValUni.value == 0 ? "00,00" : tableQnt.value * tableValUni.value}</div>
          <div class="w-1/10">
             <i
-              class="fa-regular fa-pen-to-square text-white hover:bg-gray-400 rounded text-lg ml-1"
+              class="fa-regular fa-pen-to-square hover:bg-gray-400 rounded text-lg ml-1 text-gray-200"
               onclick="editTable(event)"></i>
             <i
               class="fa-regular fa-trash-can text-lg text-red-400 hover:bg-gray-400 rounded"
@@ -175,24 +176,76 @@ const editTable = (event) => {
   let divEdit = Array.from(
     event.currentTarget.parentElement.parentElement.children,
   );
-  divEdit.forEach((d, i) => {
+
+  /*
+  <div class="flex p-1 w-full gap-2">
+          <div class=" w-full max-w-1/10 flex break-all nowrap">${tableQnt.value}</div>
+          <div class="w-full flex justify-center wrap text-justify break-all">${tableDesc.value}</div>
+          <div class="w-2/10 text-center">R$ ${tableValUni.value == "" ? "00,00" : tableValUni.value}</div>
+          <div class="w-2/10 flex justify-center">R$ ${tableQnt.value * tableValUni.value == 0 ? "00,00" : tableQnt.value * tableValUni.value}</div>
+         <div class="w-1/10">
+            <i
+              class="fa-regular fa-pen-to-square text-white hover:bg-gray-400 rounded text-lg ml-1"
+              onclick="editTable(event)"></i>
+            <i
+              class="fa-regular fa-trash-can text-lg text-red-400 hover:bg-gray-400 rounded"
+              onclick="deleteTable(event)"></i>
+          </div>
+          </div>
+  */
+  divEdit.forEach((div, i) => {
     if (i == divEdit.length - 1) {
-      d.innerHTML = `<i class="fa-solid fa-check text-green-400 hover:bg-gray-500 rounded text-lg"></i><i
+      div.innerHTML = `<i
+              class="fa-solid fa-check text-green-400 hover:bg-gray-400 rounded text-lg ml-1 "
+              onclick="confirmEdit(event)"></i><i
               class="fa-regular fa-trash-can text-lg text-red-400 hover:bg-gray-400 rounded"
               onclick="deleteTable(event)"></i>`;
-      d.setAttribute('class',' flex gap-2 items-center')
-      console.log(d);
+      div.setAttribute("class", "flex  items-center w-1/10 gap-1");
     } else {
-      let content = d.textContent;
-      d.innerHTML = ``;
-      let newDiv = document.createElement("div");
-      newDiv.innerHTML = `<input type="text" value ="${content}" class= "w-full bg-gray-500 text-center rounded"/>`;
-      newDiv.setAttribute("class", "flex rounded-xl animate-pulse");
-      d.appendChild(newDiv);
+      let valueDiv0 = div.textContent;
+      div.innerHTML = `<input type="text" value = "${valueDiv0} " class = "text-center w-full inputsTable "/>`;
     }
+  });
+
+  divEdit[0].setAttribute(
+    "class",
+    "w-full max-w-1/10 flex break-all nowrap bg-gray-500 animate-pulse flex justify-center rounded-lg",
+  );
+  divEdit[1].setAttribute(
+    "class",
+    "w-full flex justify-center wrap text-justify break-all",
+  );
+  divEdit[2].setAttribute("class", "w-2/10 text-center");
+  divEdit[3].setAttribute("class", "w-2/10 flex justify-center");
+
+  const inputsTable = document.querySelectorAll(".inputsTable");
+  inputsTable.forEach((input) => {
+    input.addEventListener("click", () => (input.value = ""));
   });
 };
 const deleteTable = () => {
   let divEdit = event.currentTarget.parentElement.parentElement.parentElement;
   divEdit.remove();
+};
+const confirmEdit = (event) => {
+  let divEdit = Array.from(
+    event.currentTarget.parentElement.parentElement.children,
+  );
+  divEdit.forEach((div, i) => {
+    if (i == divEdit.length - 1) {
+      div.innerHTML = `<i
+              class="fa-regular fa-pen-to-square text-white hover:bg-gray-400 rounded text-lg ml-1 print:hidden"
+              onclick="editTable(event)"></i><i
+              class="fa-regular fa-trash-can text-lg text-red-400 hover:bg-gray-400 rounded print:hidden"
+              onclick="deleteTable(event)"></i>`;
+    } else {
+      let inputs = div.children[0].value;
+      console.log(inputs);
+      div.innerHTML = "";
+      let newDiv = document.createElement("div");
+      newDiv.innerHTML = `${inputs}`;
+      newDiv.setAttribute("class", "flex rounded-xl ");
+      div.appendChild(newDiv);
+    }
+  });
 };
