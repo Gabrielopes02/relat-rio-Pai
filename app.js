@@ -3,7 +3,7 @@ to do list
 
 Map separado [check]
 Bobina minúscula [check]
-Inverter input com total
+Inverter input com total [check]
 Editar tabela
 mudar nome do pdf
 
@@ -52,19 +52,39 @@ addTable.addEventListener("click", () => {
   let total = 0;
   const table = document.querySelector("#table");
   divTotalExist = document.querySelector("#divTotal");
-  newDiv.innerHTML = `<div class="flex p-1 w-full gap-2">
-          <div class=" w-full max-w-1/10 flex break-all nowrap justify-center">${tableQnt.value}</div>
-          <div class="w-full flex justify-center wrap text-justify break-all">${tableDesc.value}</div>
-          <div class="w-2/10 text-center">R$ ${tableValUni.value == "" ? "00,00" : tableValUni.value}</div>
-          <div class="w-2/10 flex justify-center">R$ ${tableQnt.value * tableValUni.value == 0 ? "00,00" : tableQnt.value * tableValUni.value}</div>
-         <div class="w-1/10">
-            <i
-              class="fa-regular fa-pen-to-square hover:bg-gray-400 rounded text-lg ml-1 text-gray-200"
-              onclick="editTable(event)"></i>
-            <i
-              class="fa-regular fa-trash-can text-lg text-red-400 hover:bg-gray-400 rounded"
-              onclick="deleteTable(event)"></i>
-          </div>
+  newDiv.innerHTML = `  <div class="flex p-1 w-full gap-2">
+            <div
+              class="w-full max-w-1/10 flex break-all nowrap justify-center" id="divTableQnt">
+              ${tableQnt.value}
+            </div>
+            <div
+              class="w-full max-w-1/10 flex break-all nowrap justify-center hidden items-center animate-pulse bg-gray-500" id="inputTableQnt">
+              <input type="text" class="" />
+            </div>
+            <div class="w-full flex justify-center wrap text-justify break-all ">
+              ${tableDesc.value}
+            </div>
+            <div
+              class="w-full max-w-1/10 flex break-all nowrap justify-center hidden">
+              <input type="text" placeholder="teste" class="w-full" />
+            </div>
+            <div class="w-2/10 text-center">${tableValUni.value}</div>
+            <div
+              class="w-full max-w-1/10 flex break-all nowrap justify-center hidden">
+              <input type="text" placeholder="teste" class="w-full" />
+            </div>
+            <div class="w-2/10 flex justify-center">${tableQnt.value * tableValUni.value}</div>
+
+            <div class="w-1/10">
+              <i
+                class="fa-solid fa-check hover:bg-gray-400 rounded text-lg ml-1 text-gray-200 !hidden"></i>
+              <i
+                class="fa-regular fa-pen-to-square hover:bg-gray-400 rounded text-lg ml-1 text-gray-200"
+                onclick="editTable(event)"></i>
+              <i
+                class="fa-regular fa-trash-can text-lg text-red-400 hover:bg-gray-400 rounded"
+                onclick="deleteTable(event)"></i>
+            </div>
           </div>
          `;
 
@@ -172,80 +192,25 @@ sensorMafPa.addEventListener("change", () => {
   sensorMafPa.value = `${valueKPa} KPa`;
 });
 
+const btnEdit = document.querySelector("#buttonEdit");
+const btnCheck = document.querySelector("#buttonCheck");
+
 const editTable = (event) => {
-  let divEdit = Array.from(
-    event.currentTarget.parentElement.parentElement.children,
-  );
+  const divTableQnt = document.querySelector("#divTableQnt");
+  const inputTableQnt = document.querySelector("#inputTableQnt");
 
-  /*
-  <div class="flex p-1 w-full gap-2">
-          <div class=" w-full max-w-1/10 flex break-all nowrap">${tableQnt.value}</div>
-          <div class="w-full flex justify-center wrap text-justify break-all">${tableDesc.value}</div>
-          <div class="w-2/10 text-center">R$ ${tableValUni.value == "" ? "00,00" : tableValUni.value}</div>
-          <div class="w-2/10 flex justify-center">R$ ${tableQnt.value * tableValUni.value == 0 ? "00,00" : tableQnt.value * tableValUni.value}</div>
-         <div class="w-1/10">
-            <i
-              class="fa-regular fa-pen-to-square text-white hover:bg-gray-400 rounded text-lg ml-1"
-              onclick="editTable(event)"></i>
-            <i
-              class="fa-regular fa-trash-can text-lg text-red-400 hover:bg-gray-400 rounded"
-              onclick="deleteTable(event)"></i>
-          </div>
-          </div>
-  */
-  divEdit.forEach((div, i) => {
-    if (i == divEdit.length - 1) {
-      div.innerHTML = `<i
-              class="fa-solid fa-check text-green-400 hover:bg-gray-400 rounded text-lg ml-1 "
-              onclick="confirmEdit(event)"></i><i
-              class="fa-regular fa-trash-can text-lg text-red-400 hover:bg-gray-400 rounded"
-              onclick="deleteTable(event)"></i>`;
-      div.setAttribute("class", "flex  items-center w-1/10 gap-1");
-    } else {
-      let valueDiv0 = div.textContent;
-      div.innerHTML = `<input type="text" value = "${valueDiv0} " class = "text-center w-full inputsTable "/>`;
-    }
-  });
+  inputTableQnt.children[0].value = divTableQnt.textContent;
 
-  divEdit[0].setAttribute(
-    "class",
-    "w-full max-w-1/10 flex break-all nowrap bg-gray-500 animate-pulse flex justify-center rounded-lg",
-  );
-  divEdit[1].setAttribute(
-    "class",
-    "w-full flex justify-center wrap text-justify break-all",
-  );
-  divEdit[2].setAttribute("class", "w-2/10 text-center");
-  divEdit[3].setAttribute("class", "w-2/10 flex justify-center");
-
-  const inputsTable = document.querySelectorAll(".inputsTable");
-  inputsTable.forEach((input) => {
-    input.addEventListener("click", () => (input.value = ""));
-  });
+  // divTableQnt.classList.toggle("hidden");
+  // inputTableQnt.classList.toggle("hidden");
+  btnCheck.classList.toggle("!hidden");
+  btnEdit.classList.toggle("!hidden");
 };
 const deleteTable = () => {
   let divEdit = event.currentTarget.parentElement.parentElement.parentElement;
   divEdit.remove();
 };
 const confirmEdit = (event) => {
-  let divEdit = Array.from(
-    event.currentTarget.parentElement.parentElement.children,
-  );
-  divEdit.forEach((div, i) => {
-    if (i == divEdit.length - 1) {
-      div.innerHTML = `<i
-              class="fa-regular fa-pen-to-square text-white hover:bg-gray-400 rounded text-lg ml-1 print:hidden"
-              onclick="editTable(event)"></i><i
-              class="fa-regular fa-trash-can text-lg text-red-400 hover:bg-gray-400 rounded print:hidden"
-              onclick="deleteTable(event)"></i>`;
-    } else {
-      let inputs = div.children[0].value;
-      console.log(inputs);
-      div.innerHTML = "";
-      let newDiv = document.createElement("div");
-      newDiv.innerHTML = `${inputs}`;
-      newDiv.setAttribute("class", "flex rounded-xl ");
-      div.appendChild(newDiv);
-    }
-  });
+  btnCheck.classList.toggle("!hidden");
+  btnEdit.classList.toggle("!hidden");
 };

@@ -312,10 +312,46 @@
           <div class="w-2/10 flex justify-center">Total</div>
           <div class="w-1/10"></div>
         </div>
-        <div id="divList"></div>
+        <div id="divList">
+          <div class="flex p-1 w-full gap-2">
+            <div
+              class="w-full max-w-1/10 flex break-all nowrap justify-center"
+              id="divTableQnt">
+              12
+            </div>
+            <div
+              class="w-full max-w-1/10 flex break-all nowrap justify-center hidden items-center animate-pulse bg-gray-500"
+              id="inputTableQnt">
+              <input type="text" class="" />
+            </div>
+            <div class="w-full flex justify-center wrap text-justify break-all">
+              12
+            </div>
+            <div
+              class="w-full max-w-1/10 flex break-all nowrap justify-center hidden">
+              <input type="text" placeholder="teste" class="w-full" />
+            </div>
+            <div class="w-2/10 text-center">12</div>
+            <div
+              class="w-full max-w-1/10 flex break-all nowrap justify-center hidden">
+              <input type="text" placeholder="teste" class="w-full" />
+            </div>
+            <div class="w-2/10 flex justify-center">12</div>
+
+            <div class="w-1/10">
+              <i
+                class="fa-solid fa-check hover:bg-gray-400 rounded text-lg ml-1 text-gray-200 !hidden" id="buttonCheck" onclick="confirmEdit(event)"></i>
+              <i
+                class="fa-regular fa-pen-to-square hover:bg-gray-400 rounded text-lg ml-1 text-gray-200" id="buttonEdit"
+                onclick="editTable(event)"></i>
+              <i
+                class="fa-regular fa-trash-can text-lg text-red-400 hover:bg-gray-400 rounded"
+                onclick="deleteTable(event)"></i>
+            </div>
+          </div>
+        </div>
 
         <!-- inputs -->
-
 
         <div class="flex p-1 print:hidden">
           <div class="w-1/10">
