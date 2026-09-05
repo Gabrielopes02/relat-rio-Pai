@@ -302,21 +302,56 @@
 
       <!-- tabela de servicos -->
 
-      <div class="w-full p-2">
+      <div class="w-full p-2 text-yellow-300">
         <!-- cabecalho -->
-        <div class="bg-white w-full"></div>
+        <div class="w-full grid grid-cols-[1fr_7fr_1fr_1fr] text-center">
+          <div>Quantidade</div>
+          <div>Descrição</div>
 
+          <div>Valor</div>
+          <div>Total</div>
+        </div>
 
+        <!-- table -->
+        <div
+          class="w-full grid grid-cols-[2fr_12fr_2fr_2fr_1fr_1fr] text-center mb-2 border">
+          <div class="">3</div>
+          <div class="text-justify">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste
+            nesciunt repellendus pariatur sequi repellat modi aspernatur, minus,
+            nemo maxime dolorum veniam quos, totam maiores. Similique quisquam
+            fuga quam aspernatur nulla.
+          </div>
 
+          <div class="">R$100,00</div>
+          <div class="">R$300,00</div>
+          
+        </div>
+        <!-- input -->
+        <div
+          class="w-full grid grid-cols-[1fr_7fr_1fr_1fr] text-center mb-2 p-2">
+          <input
+            type="text"
+            id="tableQnt"
+            placeholder="Quantidade"
+            class="min-w-0 w-full" />
+          <input
+            type="text"
+            id="tableDesc"
+            placeholder="Descrição de manutenção ou peças"
+            class="min-w-0 w-full text-center" />
+          <input
+            type="text"
+            id="tableValUni"
+            placeholder="Quantidade"
+            class="min-w-0 w-full text-center" />
+          <input
+            type="text"
+            id="tableTot"
+            placeholder="Quantidade"
+            class="min-w-0 w-full text-center" />
+        </div>
       </div>
-
-
-
-
-
-
-
-
 
       <!-- div button -->
       <div class="flex justify-between px-5 mb-5 w-full text-yellow-300">
