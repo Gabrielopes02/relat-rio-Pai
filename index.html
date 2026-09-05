@@ -304,7 +304,8 @@
 
       <div class="w-full p-2 text-yellow-300">
         <!-- cabecalho -->
-        <div class="w-full grid grid-cols-[1fr_7fr_1fr_1fr] text-center">
+        <div
+          class="w-full grid grid-cols-[2fr_12fr_2fr_2fr_1fr_1fr] text-center">
           <div>Quantidade</div>
           <div>Descrição</div>
 
@@ -313,25 +314,33 @@
         </div>
 
         <!-- table -->
-        <div
-          class="w-full grid grid-cols-[2fr_12fr_2fr_2fr_1fr_1fr] text-center mb-2 border">
-          <div class="">3</div>
-          <div class="text-justify">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste
-            nesciunt repellendus pariatur sequi repellat modi aspernatur, minus,
-            nemo maxime dolorum veniam quos, totam maiores. Similique quisquam
-            fuga quam aspernatur nulla.
+        <div id="table">
+          <div
+            class="w-full grid grid-cols-[2fr_12fr_2fr_2fr_1fr_1fr] text-center border "
+            id="divLine">
+            <div class="m-auto">3</div>
+            <div class="text-justify p-2 m-auto">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste
+              nesciunt repellendus pariatur sequi repellat modi aspernatur,
+              minus, nemo maxime dolorum veniam quos, totam maiores. Similique
+              quisquam fuga quam aspernatur nulla.
+            </div>
+            <div class="m-auto">R$100,00</div>
+            <div class="m-auto">R$300,00</div>
+            <i
+              class="fa-regular fa-pen-to-square hover:bg-gray-400 rounded text-3xl text-gray-200 m-auto"
+              onclick="editTable(event)"></i>
+            <i
+              class="fa-regular fa-trash-can text-3xl m-auto text-red-400 hover:bg-gray-400 rounded"
+              onclick="deleteTable(event)"></i>
           </div>
-
-          <div class="">R$100,00</div>
-          <div class="">R$300,00</div>
-          
         </div>
         <!-- input -->
         <div
-          class="w-full grid grid-cols-[1fr_7fr_1fr_1fr] text-center mb-2 p-2">
+          class="w-full grid grid-cols-[2fr_12fr_2fr_2fr_1fr_1fr] text-center mb-2 p-2">
           <input
-            type="text"
+            min="1"
+            type="number"
             id="tableQnt"
             placeholder="Quantidade"
             class="min-w-0 w-full" />
@@ -343,12 +352,7 @@
           <input
             type="text"
             id="tableValUni"
-            placeholder="Quantidade"
-            class="min-w-0 w-full text-center" />
-          <input
-            type="text"
-            id="tableTot"
-            placeholder="Quantidade"
+            placeholder="R$00,00"
             class="min-w-0 w-full text-center" />
         </div>
       </div>

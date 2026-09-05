@@ -40,83 +40,6 @@ let unidadesMedida = [
   [0.1, 1],
 ];
 
-addTable.addEventListener("click", () => {
-  const tableQnt = document.querySelector("#tableQnt");
-  const tableDesc = document.querySelector("#tableDesc");
-  const tableValUni = document.querySelector("#tableValUni");
-  const tableTot = document.querySelector("#tableTot");
-
-  const divList = document.querySelector("#divList");
-
-  const newDiv = document.createElement("div");
-  let total = 0;
-  const table = document.querySelector("#table");
-  divTotalExist = document.querySelector("#divTotal");
-  newDiv.innerHTML = `  <div class="flex p-1 w-full gap-2">
-            <div
-              class="w-full max-w-1/10 flex break-all nowrap justify-center" id="divTableQnt">
-              ${tableQnt.value}
-            </div>
-            <div
-              class="w-full max-w-1/10 flex break-all nowrap justify-center hidden items-center animate-pulse bg-gray-500" id="inputTableQnt">
-              <input type="text" class="" />
-            </div>
-            <div class="w-full flex justify-center wrap text-justify break-all ">
-              ${tableDesc.value}
-            </div>
-            <div
-              class="w-full max-w-1/10 flex break-all nowrap justify-center hidden">
-              <input type="text" placeholder="teste" class="w-full" />
-            </div>
-            <div class="w-2/10 text-center">${tableValUni.value}</div>
-            <div
-              class="w-full max-w-1/10 flex break-all nowrap justify-center hidden">
-              <input type="text" placeholder="teste" class="w-full" />
-            </div>
-            <div class="w-2/10 flex justify-center">${tableQnt.value * tableValUni.value}</div>
-
-            <div class="w-1/10">
-              <i
-                class="fa-solid fa-check hover:bg-gray-400 rounded text-lg ml-1 text-gray-200 !hidden"></i>
-              <i
-                class="fa-regular fa-pen-to-square hover:bg-gray-400 rounded text-lg ml-1 text-gray-200"
-                onclick="editTable(event)"></i>
-              <i
-                class="fa-regular fa-trash-can text-lg text-red-400 hover:bg-gray-400 rounded"
-                onclick="deleteTable(event)"></i>
-            </div>
-          </div>
-         `;
-
-  newDiv.classList.add("border");
-  divList.append(newDiv);
-
-  if (divTotalExist) {
-    table.appendChild(divTotalExist);
-  } else {
-    let divTotal = document.createElement("div");
-    divTotal.innerHTML = `<div class="flex w-full mt-1">
-    
-          <div class=" w-full max-w-1/10 flex break-all"></div>
-          <div class="w-full flex justify-center wrap text-justify break-all"></div>
-          <div class="w-2/10 text-center border border-r-0">Total</div>
-          <div class="w-2/10 flex justify-center border border-l-0">R$ ${total}</div>
-        </div>`;
-
-    divTotal.setAttribute("id", "divTotal");
-    table.append(divTotal);
-  }
-  arrayTotal.push(tableQnt.value * tableValUni.value);
-
-  tableQnt.value = "";
-  tableDesc.value = "";
-  tableValUni.value = "";
-  tableTot.value = "";
-  arrayTotal.forEach((u) => {
-    total += u;
-  });
-  divTotal.children[0].children[3].innerHTML = `R$${total}`;
-});
 saveInPdf.addEventListener("click", () => {
   window.print();
 });
@@ -214,3 +137,23 @@ const confirmEdit = (event) => {
   btnCheck.classList.toggle("!hidden");
   btnEdit.classList.toggle("!hidden");
 };
+addTable.addEventListener("click", () => {
+  const tableQnt = document.querySelector("#tableQnt");
+  const tableDesc = document.querySelector("#tableDesc");
+  const tableValUni = document.querySelector("#tableValUni");
+  const divLine = document.querySelector("#divLine");
+  const divTable = document.querySelector("#table");
+
+  
+  newDiv = divLine.cloneNode(true)
+  console.log(newDiv);
+  newDiv.children[0].textContent = tableQnt.value;
+  newDiv.children[1].textContent = tableDesc.value;
+  newDiv.children[2].textContent = tableValUni.value;
+  newDiv.children[3].textContent = "carai de sasa";
+  newDiv.classList.toggle('hidden')
+  divTable.appendChild(newDiv);
+  tableQnt.value = "";
+  tableDesc.value = "";
+  tableValUni.value = "";
+});
