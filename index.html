@@ -316,22 +316,19 @@
         <!-- table -->
         <div id="table">
           <div
-            class="w-full grid grid-cols-[2fr_12fr_2fr_2fr_1fr_1fr] text-center border "
+            class="w-full grid grid-cols-[2fr_12fr_2fr_2fr_1fr_1fr] text-center border hidden"
             id="divLine">
-            <div class="m-auto">3</div>
-            <div class="text-justify p-2 m-auto">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste
-              nesciunt repellendus pariatur sequi repellat modi aspernatur,
-              minus, nemo maxime dolorum veniam quos, totam maiores. Similique
-              quisquam fuga quam aspernatur nulla.
-            </div>
-            <div class="m-auto">R$100,00</div>
-            <div class="m-auto">R$300,00</div>
+            <div class="m-auto"></div>
+            <div class="text-justify p-2 m-auto w-full"></div>
+            <div class="m-auto w-full"></div>
+            <div class="m-auto valueToSum"></div>
             <i
-              class="fa-regular fa-pen-to-square hover:bg-gray-400 rounded text-3xl text-gray-200 m-auto"
+              class="fa-regular fa-square-check hover:bg-gray-400 rounded text-3xl text-gray-200 m-auto p-2 text-green-400 !hidden"></i>
+            <i
+              class="fa-regular fa-pen-to-square hover:bg-gray-400 rounded text-3xl text-gray-200 m-auto p-2 text-yellow-200"
               onclick="editTable(event)"></i>
             <i
-              class="fa-regular fa-trash-can text-3xl m-auto text-red-400 hover:bg-gray-400 rounded"
+              class="fa-regular fa-trash-can text-3xl m-auto text-red-400 hover:bg-gray-400 rounded p-2"
               onclick="deleteTable(event)"></i>
           </div>
         </div>
@@ -343,7 +340,7 @@
             type="number"
             id="tableQnt"
             placeholder="Quantidade"
-            class="min-w-0 w-full" />
+            class="min-w-0 w-full text-center" />
           <input
             type="text"
             id="tableDesc"
@@ -354,6 +351,15 @@
             id="tableValUni"
             placeholder="R$00,00"
             class="min-w-0 w-full text-center" />
+        </div>
+
+        <!-- total -->
+        <div
+          id="divTotal"
+          class="mb-2 w-full grid grid-cols-[2fr_12fr_2fr_2fr_1fr_1fr] text-center hidden">
+          <div class="col-span-2"></div>
+          <div class="m-auto border w-full border-r-0">Total</div>
+          <div class="m-auto border w-full border-l-0"></div>
         </div>
       </div>
 

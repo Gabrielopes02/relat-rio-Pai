@@ -118,25 +118,12 @@ sensorMafPa.addEventListener("change", () => {
 const btnEdit = document.querySelector("#buttonEdit");
 const btnCheck = document.querySelector("#buttonCheck");
 
-const editTable = (event) => {
-  const divTableQnt = document.querySelector("#divTableQnt");
-  const inputTableQnt = document.querySelector("#inputTableQnt");
+const confirmEdit = () => {};
 
-  inputTableQnt.children[0].value = divTableQnt.textContent;
+const deleteTable = (event) => {
+  event.target.closest("#divLine").remove();
+};
 
-  // divTableQnt.classList.toggle("hidden");
-  // inputTableQnt.classList.toggle("hidden");
-  btnCheck.classList.toggle("!hidden");
-  btnEdit.classList.toggle("!hidden");
-};
-const deleteTable = () => {
-  let divEdit = event.currentTarget.parentElement.parentElement.parentElement;
-  divEdit.remove();
-};
-const confirmEdit = (event) => {
-  btnCheck.classList.toggle("!hidden");
-  btnEdit.classList.toggle("!hidden");
-};
 addTable.addEventListener("click", () => {
   const tableQnt = document.querySelector("#tableQnt");
   const tableDesc = document.querySelector("#tableDesc");
@@ -144,16 +131,40 @@ addTable.addEventListener("click", () => {
   const divLine = document.querySelector("#divLine");
   const divTable = document.querySelector("#table");
 
-  
-  newDiv = divLine.cloneNode(true)
-  console.log(newDiv);
+  newDiv = divLine.cloneNode(true);
   newDiv.children[0].textContent = tableQnt.value;
   newDiv.children[1].textContent = tableDesc.value;
   newDiv.children[2].textContent = tableValUni.value;
-  newDiv.children[3].textContent = "carai de sasa";
-  newDiv.classList.toggle('hidden')
+  newDiv.children[3].textContent = tableQnt.value * tableValUni.value;
+  newDiv.classList.toggle("hidden");
   divTable.appendChild(newDiv);
   tableQnt.value = "";
   tableDesc.value = "";
   tableValUni.value = "";
+  sumValuesInput();
 });
+
+const sumValuesInput = () => {
+  const valuesToSum = document.querySelectorAll(".valueToSum");
+  const divTotal = document.querySelector("#divTotal");
+  let sum = 0;
+
+  valuesToSum.forEach((div) => {
+    sum += Number(div.textContent);
+  });
+  divTotal.classList.remove("hidden");
+  divTotal.children[2].textContent = sum;
+};
+const editTable = (event) => {
+  const divs = Array.from(event.target.closest("#divLine").children);
+  divs.forEach((div, i) => {
+    let valorDiv = div.textContent;
+    let newInput = document.createElement("input");
+    newInput.classList.add("min-w-0", "w-full", "text-center");
+    newInput.value = valorDiv;
+    if (i < 3) {
+      div.innerHTML = "";
+      div.appendChild(newInput);
+    }
+  });
+};
