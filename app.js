@@ -115,10 +115,19 @@ sensorMafPa.addEventListener("change", () => {
   sensorMafPa.value = `${valueKPa} KPa`;
 });
 
-const btnEdit = document.querySelector("#buttonEdit");
-const btnCheck = document.querySelector("#buttonCheck");
 
-const confirmEdit = () => {};
+const confirmEdit = (event) => {
+
+const divs = Array.from(event.target.closest("#divLine").children);
+	divs[5].classList.toggle('!hidden')
+	divs[4].classList.toggle('!hidden')
+	divs.forEach((div, i) => {
+    div.innerHTML = ''
+	let newDiv = document.createElement('div')
+	divs.appendChild(newDiv)
+	
+  });
+};
 
 const deleteTable = (event) => {
   event.target.closest("#divLine").remove();
@@ -142,6 +151,7 @@ addTable.addEventListener("click", () => {
   tableDesc.value = "";
   tableValUni.value = "";
   sumValuesInput();
+
 });
 
 const sumValuesInput = () => {
@@ -157,14 +167,21 @@ const sumValuesInput = () => {
 };
 const editTable = (event) => {
   const divs = Array.from(event.target.closest("#divLine").children);
+	divs[5].classList.toggle('!hidden')
+	divs[4].classList.toggle('!hidden')
+	divs[0].classList.toggle('pl-2')
   divs.forEach((div, i) => {
     let valorDiv = div.textContent;
     let newInput = document.createElement("input");
     newInput.classList.add("min-w-0", "w-full", "text-center");
     newInput.value = valorDiv;
+	  	
     if (i < 3) {
-      div.innerHTML = "";
+      div.innerHTML = "";	
       div.appendChild(newInput);
+		
+	newInput.classList.add('bg-gray-400','animate-pulse','rounded-xl')
+		
     }
   });
 };
