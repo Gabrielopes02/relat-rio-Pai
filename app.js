@@ -121,6 +121,7 @@ sensorMafPa.addEventListener("change", () => {
 
 const deleteTable = (event) => {
   event.target.closest("#divLine").remove();
+  sumValuesInput()
 };
 
 addTable.addEventListener("click", () => {
