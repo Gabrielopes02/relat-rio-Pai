@@ -46,6 +46,7 @@ saveInPdf.addEventListener("click", () => {
   const cor = document.querySelector('#cor')
   document.title = `${cliente.value} (${veiculo.value}, ${cor.value})`
   window.print();
+  document.title = 'Alto Nível'
 });
 
 inputPressionB.addEventListener("change", () => {
