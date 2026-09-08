@@ -4,7 +4,7 @@ to do list
 Map separado [check]
 Bobina minúscula [check]
 Inverter input com total [check]
-Editar tabela
+Editar tabela [check]
 mudar nome do pdf
 
 */
@@ -41,6 +41,10 @@ let unidadesMedida = [
 ];
 
 saveInPdf.addEventListener("click", () => {
+  const cliente = document.querySelector('#cliente')
+  const veiculo = document.querySelector('#veiculo')
+  const cor = document.querySelector('#cor')
+  document.title = `${cliente.value} (${veiculo.value}, ${cor.value})`
   window.print();
 });
 
@@ -115,20 +119,6 @@ sensorMafPa.addEventListener("change", () => {
   sensorMafPa.value = `${valueKPa} KPa`;
 });
 
-
-const confirmEdit = (event) => {
-
-const divs = Array.from(event.target.closest("#divLine").children);
-	divs[5].classList.toggle('!hidden')
-	divs[4].classList.toggle('!hidden')
-	divs.forEach((div, i) => {
-    div.innerHTML = ''
-	let newDiv = document.createElement('div')
-	divs.appendChild(newDiv)
-	
-  });
-};
-
 const deleteTable = (event) => {
   event.target.closest("#divLine").remove();
 };
@@ -143,15 +133,14 @@ addTable.addEventListener("click", () => {
   newDiv = divLine.cloneNode(true);
   newDiv.children[0].textContent = tableQnt.value;
   newDiv.children[1].textContent = tableDesc.value;
-  newDiv.children[2].textContent = tableValUni.value;
-  newDiv.children[3].textContent = tableQnt.value * tableValUni.value;
+  newDiv.children[2].textContent = `R$ ${tableValUni.value}`;
+  newDiv.children[3].textContent = `R$ ${tableQnt.value * tableValUni.value}`;
   newDiv.classList.toggle("hidden");
   divTable.appendChild(newDiv);
   tableQnt.value = "";
   tableDesc.value = "";
   tableValUni.value = "";
   sumValuesInput();
-
 });
 
 const sumValuesInput = () => {
@@ -159,29 +148,65 @@ const sumValuesInput = () => {
   const divTotal = document.querySelector("#divTotal");
   let sum = 0;
 
-  valuesToSum.forEach((div) => {
-    sum += Number(div.textContent);
+  valuesToSum.forEach((div, i) => {
+    if (i > 0) {
+      sum += Number(div.textContent.split("R$")[1]);
+    }
   });
   divTotal.classList.remove("hidden");
-  divTotal.children[2].textContent = sum;
+  divTotal.children[2].textContent = `R$ ${sum}`;
 };
 const editTable = (event) => {
   const divs = Array.from(event.target.closest("#divLine").children);
-	divs[5].classList.toggle('!hidden')
-	divs[4].classList.toggle('!hidden')
-	divs[0].classList.toggle('pl-2')
+  divs[5].classList.toggle("!hidden");
+  divs[4].classList.toggle("!hidden");
+  divs[0].classList.toggle("pl-2");
   divs.forEach((div, i) => {
     let valorDiv = div.textContent;
     let newInput = document.createElement("input");
     newInput.classList.add("min-w-0", "w-full", "text-center");
     newInput.value = valorDiv;
-	  	
+
     if (i < 3) {
-      div.innerHTML = "";	
+      div.innerHTML = "";
       div.appendChild(newInput);
-		
-	newInput.classList.add('bg-gray-400','animate-pulse','rounded-xl')
-		
+
+      newInput.classList.add(
+        "border-2",
+        "border-dotted",
+        "border-yellow-800",
+        "animate-pulse",
+        "rounded-xl",
+      );
     }
   });
+};
+const confirmEdit = (event) => {
+  const divs = Array.from(event.target.closest("#divLine").children);
+  divs[5].classList.toggle("!hidden");
+  divs[4].classList.toggle("!hidden");
+
+  divs.forEach((div, i) => {
+    if (i < 3) {
+      let valueDiv = div.children[0].value;
+
+      div.innerHTML = "";
+      let newDiv = document.createElement("div");
+      newDiv.classList.add("text-center");
+      newDiv.textContent = valueDiv;
+      div.appendChild(newDiv);
+      if (i == 3) {
+        newDiv.classList.add("valueToSum");
+      }
+    }
+  });
+
+  if (divs[2].textContent.includes("R$")) {
+    divs[3].textContent = `R$ ${divs[0].textContent * divs[2].textContent.split("R$")[1]}`;
+    divs[2].textContent = ` R$ ${divs[2].textContent.split("R$")[1]}`;
+  } else {
+    divs[3].textContent = `R$ ${divs[0].textContent * divs[2].textContent}`;
+    divs[2].textContent = `R$ ${divs[2].textContent}`;
+  }
+  sumValuesInput();
 };
